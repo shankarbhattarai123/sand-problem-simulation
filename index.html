@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesmeric Sand Simulator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <!-- Link to External Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="bg-layer"></div>
+    <canvas id="sandCanvas"></canvas>
+
+    <!-- Header overlay -->
+    <header id="mainHeader">
+        <h1 id="titleText">Mesmeric Sand</h1>
+        <div class="subtitle" id="subtitleText">Tap and drag anywhere to pour elegant glowing spheres.</div>
+    </header>
+
+    <!-- Floating poetic information box -->
+    <div class="info-card" id="infoCard">
+        <div class="info-label" id="infoLabel">Spheres</div>
+        <div class="info-body" id="infoBody">
+            Spheres roll and slide effortlessly, flowing like liquid to settle in wide, gentle plains.
+        </div>
+    </div>
+
+    <!-- Beaker Packing HUD (only visible in Beaker Mode) -->
+    <div class="beaker-hud" id="beakerHud">
+        <div class="hud-title">CONTAINER HU-01</div>
+        <div class="hud-metric">
+            <span class="hud-label">Packing Density:</span>
+            <span class="hud-val" id="hudDensity">0.0%</span>
+        </div>
+        <div class="hud-metric">
+            <span class="hud-label">Void Space:</span>
+            <span class="hud-val" id="hudVoids">100.0%</span>
+        </div>
+        <div class="hud-metric">
+            <span class="hud-label">Active Grains:</span>
+            <span class="hud-val" id="hudCount">0</span>
+        </div>
+        <div class="hud-metric">
+            <span class="hud-label">Fill Height:</span>
+            <span class="hud-val" id="hudLevel">0.0 cm</span>
+        </div>
+    </div>
+
+    <!-- Floating Glass Control Deck -->
+    <div class="control-deck" id="controlDeck">
+        <!-- Shape Selection Grid -->
+        <div class="shape-row">
+            <button class="shape-btn active" data-shape="sphere">
+                <i>⚽</i>
+                <span>Spheres</span>
+            </button>
+            <button class="shape-btn" data-shape="rod">
+                <i>🪵</i>
+                <span>Sticks</span>
+            </button>
+            <button class="shape-btn" data-shape="star">
+                <i>⭐</i>
+                <span>Stars</span>
+            </button>
+            <button class="shape-btn" data-shape="hex">
+                <i>🌵</i>
+                <span>Spiky</span>
+            </button>
+        </div>
+
+        <!-- Row for Sliders and Actions -->
+        <div class="controls-row">
+            <!-- Wind Control -->
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Desert Wind</span>
+                    <span class="val" id="windVal">0.00</span>
+                </div>
+                <input type="range" id="windSlider" min="-0.15" max="0.15" step="0.01" value="0.00">
+            </div>
+
+            <!-- Flow Rate Control -->
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Flow Speed</span>
+                    <span class="val" id="flowVal">Medium</span>
+                </div>
+                <input type="range" id="flowSlider" min="1" max="5" value="3">
+            </div>
+
+            <!-- Toggle & Trigger Actions -->
+            <div class="actions-group">
+                <!-- Auto Drip Toggle -->
+                <div class="toggle-container active" id="autoDripToggle">
+                    <div class="toggle-switch"></div>
+                    <div class="toggle-label">Auto Pour</div>
+                </div>
+
+                <!-- Beaker Mode Toggle -->
+                <div class="toggle-container" id="beakerToggle">
+                    <div class="toggle-switch"></div>
+                    <div class="toggle-label">Beaker Mode</div>
+                </div>
+
+                <!-- Vibrate Container -->
+                <button class="action-btn" id="vibrateBtn" style="display: none;">
+                    <span>📳</span>
+                    <span>Vibrate</span>
+                </button>
+
+                <!-- Clear Sandbox -->
+                <button class="action-btn" id="clearBtn">
+                    <span>💥</span>
+                    <span>Clear</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to External JavaScript Logic -->
+    <script src="script.js"></script>
+</body>
+
+</html>
