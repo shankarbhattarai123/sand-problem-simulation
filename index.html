@@ -4,129 +4,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sand Simulator</title>
-    <!-- Google Fonts -->
+    <title>How Photos Become One Big Picture</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap"
         rel="stylesheet">
-
-    <!-- Link to External Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="bg-layer"></div>
-    <canvas id="sandCanvas"></canvas>
 
-    <!-- Header overlay -->
-    <header id="mainHeader">
-        <h1 id="titleText">Sand Simulator</h1>
-        <div class="subtitle" id="subtitleText">Tap and drag anywhere to pour elegant glowing spheres.</div>
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="topnav">
+        <div class="brand">📸 <span>PhotoMagic</span></div>
+        <div class="nav-btn" id="navPlayBtn">Try it! 🪄</div>
+    </nav>
+
+    <!-- ============ HERO ============ -->
+    <header class="hero" id="hero">
+        <div class="hero-copy">
+
+            <h1>How do <em>lots</em> of photos<br>become <em>ONE</em> giant picture?</h1>
+            <p>You know when you take a few photos side by side, and a computer
+                glues them into one wide, beautiful picture? Let's find out how it
+                does that — no boring stuff, promise. 🙂</p>
+            <button class="btn-big" id="startStoryBtn">
+                Show me the magic <span class="arrow">→</span>
+            </button>
+        </div>
+        <div class="hero-art" id="heroArt"></div>
     </header>
 
-    <!-- Floating poetic information box -->
-    <div class="info-card" id="infoCard">
-        <div class="info-label" id="infoLabel">Spheres</div>
-        <div class="info-body" id="infoBody">
-            Spheres roll and slide effortlessly, flowing like liquid to settle in wide, gentle plains.
-        </div>
-    </div>
-
-    <!-- Beaker Packing HUD (only visible in Beaker Mode) -->
-    <div class="beaker-hud" id="beakerHud">
-        <div class="hud-title">CONTAINER HU-01</div>
-        <div class="hud-metric">
-            <span class="hud-label">Packing Density:</span>
-            <span class="hud-val" id="hudDensity">0.0%</span>
-        </div>
-        <div class="hud-metric">
-            <span class="hud-label">Void Space:</span>
-            <span class="hud-val" id="hudVoids">100.0%</span>
-        </div>
-        <div class="hud-metric">
-            <span class="hud-label">Active Grains:</span>
-            <span class="hud-val" id="hudCount">0</span>
-        </div>
-        <div class="hud-metric">
-            <span class="hud-label">Fill Height:</span>
-            <span class="hud-val" id="hudLevel">0.0 cm</span>
-        </div>
-    </div>
-
-    <!-- Floating Glass Control Deck -->
-    <div class="control-deck" id="controlDeck">
-        <!-- Shape Selection Grid -->
-        <div class="shape-row">
-            <button class="shape-btn active" data-shape="sphere">
-                <i>⚽</i>
-                <span>Spheres</span>
-            </button>
-            <button class="shape-btn" data-shape="rod">
-                <i>🪵</i>
-                <span>Sticks</span>
-            </button>
-            <button class="shape-btn" data-shape="star">
-                <i>⭐</i>
-                <span>Stars</span>
-            </button>
-            <button class="shape-btn" data-shape="hex">
-                <i>🌵</i>
-                <span>Spiky</span>
-            </button>
+    <!-- ============ STORY ============ -->
+    <section class="section" id="story">
+        <div class="section-head">
+            <div class="badge">The story</div>
+            <h2>Five steps to one big photo</h2>
+            <p>Tap the arrows (or press play) and watch it happen.</p>
         </div>
 
-        <!-- Row for Sliders and Actions -->
-        <div class="controls-row">
-            <!-- Wind Control -->
-            <div class="slider-group">
-                <div class="slider-label">
-                    <span>Desert Wind</span>
-                    <span class="val" id="windVal">0.00</span>
-                </div>
-                <input type="range" id="windSlider" min="-0.15" max="0.15" step="0.01" value="0.00">
+        <div class="story-wrap">
+            <canvas id="storyCanvas" width="1000" height="560"></canvas>
+
+            <div class="story-caption">
+                <div class="story-dots" id="storyDots"></div>
+                <h3 id="storyTitle">Step title</h3>
+                <p id="storyText">Step text.</p>
             </div>
 
-            <!-- Flow Rate Control -->
-            <div class="slider-group">
-                <div class="slider-label">
-                    <span>Flow Speed</span>
-                    <span class="val" id="flowVal">Medium</span>
-                </div>
-                <input type="range" id="flowSlider" min="1" max="5" value="3">
-            </div>
-
-            <!-- Toggle & Trigger Actions -->
-            <div class="actions-group">
-                <!-- Auto Drip Toggle -->
-                <div class="toggle-container active" id="autoDripToggle">
-                    <div class="toggle-switch"></div>
-                    <div class="toggle-label">Auto Pour</div>
-                </div>
-
-                <!-- Beaker Mode Toggle -->
-                <div class="toggle-container" id="beakerToggle">
-                    <div class="toggle-switch"></div>
-                    <div class="toggle-label">Beaker Mode</div>
-                </div>
-
-                <!-- Vibrate Container -->
-                <button class="action-btn" id="vibrateBtn" style="display: none;">
-                    <span>📳</span>
-                    <span>Vibrate</span>
-                </button>
-
-                <!-- Clear Sandbox -->
-                <button class="action-btn" id="clearBtn">
-                    <span>💥</span>
-                    <span>Clear</span>
-                </button>
+            <div class="story-controls">
+                <button id="storyRestart" title="Start over">⟲</button>
+                <button id="storyPrev" title="Back">‹</button>
+                <button id="storyPlay" title="Play">▶</button>
+                <button id="storyNext" title="Next">›</button>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Link to External JavaScript Logic -->
+    <!-- ============ PLAYGROUND ============ -->
+    <section class="section section-tint" id="play">
+        <div class="section-head">
+            <div class="badge">Your turn</div>
+            <h2>Play with it yourself</h2>
+            <p>Slide things around and watch your own panorama change in real time.</p>
+        </div>
+
+        <div class="play-wrap">
+            <canvas id="playCanvas" width="900" height="420"></canvas>
+
+            <div class="play-controls" id="playControls"></div>
+        </div>
+    </section>
+
+    <!-- ============ FUN FACTS ============ -->
+    <section class="section" id="facts">
+        <div class="section-head">
+            <div class="badge">Did you know?</div>
+            <h2>Cool facts about photo-stitching</h2>
+        </div>
+        <div class="facts-grid" id="factsGrid"></div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="footer-brand">📸 <span>PhotoMagic</span></div>
+        <p>Inspired by real computer-vision research on stitching photos into
+            panoramas automatically (Brown &amp; Lowe, 2007) — retold simply, for
+            everyone. Built with plain HTML, CSS &amp; JavaScript.</p>
+        <p class="footer-credit">Panorama photo: "North Walls of Ani, Turkey" by Ggia,
+            <a href="https://commons.wikimedia.org/wiki/File:20110419_Ani_North_Walls_Turkey_Panorama.jpg"
+                target="_blank" rel="noopener">Wikimedia Commons</a>,
+            licensed <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA
+                3.0</a>.
+        </p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 
